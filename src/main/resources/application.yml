@@ -1,0 +1,20 @@
+server :
+  port : 8081
+spring:
+  application:
+    name: fly-spring boot
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fly-management
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 1234
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        hbm2ddl:
+          auto: update
+
+

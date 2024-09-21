@@ -2,14 +2,15 @@ package com.flyroute.fly.controller;
 
 import com.flyroute.fly.dto.UserDto;
 import com.flyroute.fly.entity.User;
-import com.flyroute.fly.repository.UserRepository;
+import com.flyroute.fly.message.UserMessage;
 import com.flyroute.fly.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -28,15 +29,15 @@ public class UserController {
             System.out.println("eklendi");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            System.out.println("kötü istek");
+            System.out.println("Kullanıcı için farklı veriler giriniz.");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUserList() {
+    public ResponseEntity<Optional<List<UserDto>>> getAllUserList() {
         try {
-            List<UserDto> userDtos = userService.getAllUserList();
+            Optional<List<UserDto>> userDtos = userService.getAllUserList();
             return ResponseEntity.ok(userDtos);
         } catch (Exception e) {
             // Log the exception
@@ -44,12 +45,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/search")
-    public List<User> searchUsers(
-            @RequestParam String name,//emre // COUNTRY DE tur olucak
-            @RequestParam String country) {
-        System.out.println("controller çalışıyor");
-        return userService.getNameList(name, country);
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<User>> getUserById(@PathVariable int id){
+        return new ResponseEntity<>(userService.getUserById(id),HttpStatus.OK);
+
     }
 
 

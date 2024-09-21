@@ -9,14 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-    private Long id;
-    private String name;
-
-    private String phone;
-
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String dataOfBirth;
     private String email;
-
-    private String country;
-
+    private String phoneNumber;
 }
 

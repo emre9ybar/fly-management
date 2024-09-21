@@ -4,13 +4,17 @@ import com.flyroute.fly.dto.UserDto;
 import com.flyroute.fly.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
     User add(UserDto userDto);
-    List<UserDto> getAllUserList();
+   Optional<List<UserDto>> getAllUserList();
 
-    List<User> getNameList(String name,String country);
+    Optional<User> getUserById(int id);
+
+    User updateUser(int id, UserDto userDTO);
 
 
-    }
+
+}

@@ -44,12 +44,7 @@ public class AirlineServiceImpl implements AirlineService {
             throw new RuntimeException("Airline not found with id: "+airlineDto.getId());
         }
 
-        Airline airline = optionalAirline.get(); // current record
-
-        airline.setCode(airlineDto.getCode());
-        airline.setCountry(airlineDto.getCountry());
-        airline.setName(airlineDto.getName());
-        airline.setWebsite(airlineDto.getWebsite());
+        Airline airline = this.mapperService.forRequest().map(airlineDto, Airline.class);
 
         return airlineRepository.save(airline);
 

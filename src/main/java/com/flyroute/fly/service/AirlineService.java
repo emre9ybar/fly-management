@@ -7,4 +7,6 @@ public interface AirlineService {
 
     Airline create(AirlineDto airlineDto);
 
+    Airline update(AirlineDto airlineDto);
+
 }

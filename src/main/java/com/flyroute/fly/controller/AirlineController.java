@@ -4,10 +4,7 @@ import com.flyroute.fly.dto.AirlineDto;
 import com.flyroute.fly.service.AirlineService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/airline")
@@ -28,11 +25,26 @@ public class AirlineController {
 
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            System.out.println("Error.");
+            System.out.println("Error."+e);
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
+    }
+
+    @PutMapping
+    public ResponseEntity<AirlineDto> update(@RequestBody AirlineDto airlineDto) {
+
+        try {
+            airlineService.update(airlineDto);
+            System.out.println("Airline updated.");
+
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (Exception e) {
+            System.out.println("Error."+e);
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 }

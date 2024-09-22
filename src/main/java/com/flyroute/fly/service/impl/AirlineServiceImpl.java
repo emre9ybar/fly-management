@@ -8,6 +8,10 @@ import com.flyroute.fly.service.AirlineService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class AirlineServiceImpl implements AirlineService {
 
@@ -43,6 +47,37 @@ public class AirlineServiceImpl implements AirlineService {
         mapperService.forRequest().map(airlineDto, existingAirline);
 
         return airlineRepository.save(existingAirline);
+
+    }
+
+    @Override
+    public List<AirlineDto> getAllAirlines() {
+
+        List<Airline> airlineList = airlineRepository.findAll();
+
+        return airlineList.stream()
+                .map(airline -> this.mapperService.forResponse().map(airline, AirlineDto.class)).
+                collect(Collectors.toList());
+
+    }
+
+    @Override
+    public Optional<Airline> getAirlineById(Long id) {
+        return airlineRepository.findById(id);
+    }
+
+    @Override
+    public String delete(Long id) {
+
+        Optional<Airline> optionalAirline = airlineRepository.findById(id);
+
+        if (optionalAirline.isEmpty()) {
+            throw new RuntimeException("Airline not found with id: "+id);
+        }
+
+        airlineRepository.deleteById(id);
+
+        return "Airline has been deleted with id: "+id;
 
     }
 

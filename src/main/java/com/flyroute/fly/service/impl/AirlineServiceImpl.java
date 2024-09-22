@@ -5,10 +5,8 @@ import com.flyroute.fly.dto.AirlineDto;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.repository.AirlineRepository;
 import com.flyroute.fly.service.AirlineService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AirlineServiceImpl implements AirlineService {
@@ -36,17 +34,15 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
+    @Transactional
     public Airline update(AirlineDto airlineDto) {
 
-        Optional<Airline> optionalAirline = airlineRepository.findById(airlineDto.getId());
+        Airline existingAirline = airlineRepository.findById(airlineDto.getId())
+                .orElseThrow(() -> new RuntimeException("Airline not found with id: " + airlineDto.getId()));
 
-        if (!optionalAirline.isPresent()) {
-            throw new RuntimeException("Airline not found with id: "+airlineDto.getId());
-        }
+        mapperService.forRequest().map(airlineDto, existingAirline);
 
-        Airline airline = this.mapperService.forRequest().map(airlineDto, Airline.class);
-
-        return airlineRepository.save(airline);
+        return airlineRepository.save(existingAirline);
 
     }
 

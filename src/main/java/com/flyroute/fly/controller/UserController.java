@@ -1,10 +1,10 @@
 package com.flyroute.fly.controller;
 
-import com.flyroute.fly.dto.UserDto;
-import com.flyroute.fly.entity.User;
-import com.flyroute.fly.repository.UserRepository;
+import com.flyroute.fly.dto.request.CreateUserRequest;
+import com.flyroute.fly.dto.request.UpdateUserRequest;
+import com.flyroute.fly.dto.response.GetUsersListResponse;
+import com.flyroute.fly.dto.response.UserGetByIdResponse;
 import com.flyroute.fly.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UserDto> add(@RequestBody UserDto userDto) {
+    public ResponseEntity<CreateUserRequest> add(@RequestBody CreateUserRequest userDto) {
         try {
             userService.add(userDto);
             System.out.println("eklendi");
@@ -34,24 +34,31 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUserList() {
+    public ResponseEntity<List<GetUsersListResponse>> getAllUserList() {
         try {
-            List<UserDto> userDtos = userService.getAllUserList();
+            List<GetUsersListResponse> userDtos = userService.getAllUserList();
             return ResponseEntity.ok(userDtos);
         } catch (Exception e) {
-            // Log the exception
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
     }
 
-    @GetMapping("/search")
-    public List<User> searchUsers(
-            @RequestParam String name,//emre // COUNTRY DE tur olucak
-            @RequestParam String country) {
-        System.out.println("controller çalışıyor");
-        return userService.getNameList(name, country);
+    @GetMapping("/{id}")
+    public ResponseEntity<UserGetByIdResponse> getUserById(@PathVariable long id){
+       UserGetByIdResponse UserGetByIdResponse = userService.getUserById(id);
+        return ResponseEntity.ok(UserGetByIdResponse) ;
     }
 
+    @PutMapping("/{id}")
+    public void update(@RequestBody UpdateUserRequest UpdateUserRequest){
+        userService.updateUser(UpdateUserRequest);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable long id){
+        userService.deleteUser(id);
+    }
 
 
 }

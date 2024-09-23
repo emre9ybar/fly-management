@@ -1,6 +1,5 @@
-package com.flyroute.fly.dto;
+package com.flyroute.fly.dto.response;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,15 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
-    private Long id;
+public class GetUsersListResponse {
+
     private String name;
 
     private String phone;
-
-    private String email;
-
-    private String country;
-
 }
-

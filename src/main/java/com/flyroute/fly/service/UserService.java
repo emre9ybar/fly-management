@@ -1,16 +1,19 @@
 package com.flyroute.fly.service;
 
-import com.flyroute.fly.dto.UserDto;
+import com.flyroute.fly.dto.request.CreateUserRequest;
+import com.flyroute.fly.dto.request.UpdateUserRequest;
+import com.flyroute.fly.dto.response.GetUsersListResponse;
+import com.flyroute.fly.dto.response.UserGetByIdResponse;
 import com.flyroute.fly.entity.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    User add(UserDto userDto);
-    List<UserDto> getAllUserList();
-
-    List<User> getNameList(String name,String country);
-
+    User add(CreateUserRequest CreateUserRequest);
+    List<GetUsersListResponse> getAllUserList();
+    void updateUser(UpdateUserRequest UpdateUserRequest);
+    UserGetByIdResponse getUserById(long id);
+    void deleteUser(long  id);
 
     }

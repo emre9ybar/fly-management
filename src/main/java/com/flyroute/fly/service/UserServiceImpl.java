@@ -1,10 +1,13 @@
 package com.flyroute.fly.service;
 
 import com.flyroute.fly.core.MapperService;
-import com.flyroute.fly.dto.UserDto;
+import com.flyroute.fly.dto.request.CreateUserRequest;
+import com.flyroute.fly.dto.request.UpdateUserRequest;
+import com.flyroute.fly.dto.response.GetUsersListResponse;
+import com.flyroute.fly.dto.response.UserGetByIdResponse;
 import com.flyroute.fly.entity.User;
 import com.flyroute.fly.repository.UserRepository;
-import lombok.Data;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,25 +27,41 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User add(UserDto userDto) {
-        User user = this.mapperService.forRequest().map(userDto, User.class);
-        System.out.println("Mapped User: " + user); // Burada user verilerini kontrol edin.
+    public User add(CreateUserRequest CreateUserRequest) {
+        User user = this.mapperService.forRequest().map(CreateUserRequest, User.class);
         return userRepository.save(user);
     }
 
     @Override
-    public List<UserDto> getAllUserList() {
-        List<User> userList = userRepository.findAll();
-        List<UserDto> userDtos = userList.stream()
-                .map(user -> this.mapperService.forResponse().map(user, UserDto.class)).
+    public List<GetUsersListResponse> getAllUserList() {
+        List<User> users = userRepository.findAll();
+        List<GetUsersListResponse> usersListResponses = users.stream().map(user -> mapperService.forResponse().map(user,GetUsersListResponse.class)).
                 collect(Collectors.toList());
-        return userDtos;
+        return usersListResponses;
     }
 
     @Override
-    public List<User> getNameList(String name, String country) {
-        return userRepository.findByNameAndCountry(name,country);
+    public void updateUser(UpdateUserRequest CreateUserRequest) {
+        User user = this.mapperService.forRequest().map(CreateUserRequest, User.class);
+       this.userRepository.save(user);
+
     }
+
+    @Override
+    public UserGetByIdResponse getUserById(long id) {
+       User user = userRepository.findById(id).orElseThrow();
+       UserGetByIdResponse getByIdResponse = mapperService.forResponse().map(user,UserGetByIdResponse.class);
+
+        return getByIdResponse;
+    }
+
+    @Override
+    public void deleteUser(long id) {
+     userRepository.deleteById(id);
+
+    }
+
+
 
 
 }

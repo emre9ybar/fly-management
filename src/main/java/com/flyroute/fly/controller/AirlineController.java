@@ -1,6 +1,7 @@
 package com.flyroute.fly.controller;
 
-import com.flyroute.fly.dto.AirlineDto;
+import com.flyroute.fly.dto.request.GetAirlineListResponse;
+import com.flyroute.fly.dto.request.UpdateAirlineRequest;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.service.AirlineService;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class AirlineController {
     }
 
     @PostMapping
-    public ResponseEntity<AirlineDto> create(@RequestBody AirlineDto airlineDto) {
+    public ResponseEntity<GetAirlineListResponse> create(@RequestBody GetAirlineListResponse airlineDto) {
 
         try {
             airlineService.create(airlineDto);
@@ -37,10 +38,10 @@ public class AirlineController {
     }
 
     @PutMapping
-    public ResponseEntity<AirlineDto> update(@RequestBody AirlineDto airlineDto) {
+    public ResponseEntity<UpdateAirlineRequest> update(@RequestBody UpdateAirlineRequest UpdateAirlineRequest) {
 
         try {
-            airlineService.update(airlineDto);
+            airlineService.update(UpdateAirlineRequest);
             System.out.println("Airline updated.");
 
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -52,10 +53,10 @@ public class AirlineController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AirlineDto>> getAllAirlines() {
+    public ResponseEntity<List<GetAirlineListResponse>> getAllAirlines() {
 
         try {
-            List<AirlineDto> airlineDtos = airlineService.getAllAirlines();
+            List<GetAirlineListResponse> airlineDtos = airlineService.getAllAirlines();
             System.out.println("All airlines have been retrieved.");
 
             return ResponseEntity.ok(airlineDtos);

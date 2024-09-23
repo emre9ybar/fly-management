@@ -1,4 +1,4 @@
-package com.flyroute.fly.dto;
+package com.flyroute.fly.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AirlineDto {
+public class GetAirlineListResponse {
 
     private long id;
 

@@ -1,7 +1,8 @@
 package com.flyroute.fly.service.impl;
 
 import com.flyroute.fly.core.MapperService;
-import com.flyroute.fly.dto.AirlineDto;
+import com.flyroute.fly.dto.request.GetAirlineListResponse;
+import com.flyroute.fly.dto.request.UpdateAirlineRequest;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.repository.AirlineRepository;
 import com.flyroute.fly.service.AirlineService;
@@ -24,7 +25,7 @@ public class AirlineServiceImpl implements AirlineService {
     }
 
     @Override
-    public Airline create(AirlineDto airlineDto) {
+    public Airline create(GetAirlineListResponse airlineDto) {
 
         if (airlineDto.getName().isEmpty() || airlineDto.getCode().isEmpty()) {
             throw new RuntimeException("Airline name and code cannot be empty!");
@@ -39,24 +40,24 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     @Transactional
-    public Airline update(AirlineDto airlineDto) {
+    public Airline update(UpdateAirlineRequest UpdateAirlineRequest) {
 
-        Airline existingAirline = airlineRepository.findById(airlineDto.getId())
-                .orElseThrow(() -> new RuntimeException("Airline not found with id: " + airlineDto.getId()));
+        Airline existingAirline = airlineRepository.findById(UpdateAirlineRequest.getId())
+                .orElseThrow(() -> new RuntimeException("Airline not found with id: " + UpdateAirlineRequest.getId()));
 
-        mapperService.forRequest().map(airlineDto, existingAirline);
+        mapperService.forRequest().map(UpdateAirlineRequest, existingAirline);
 
         return airlineRepository.save(existingAirline);
 
     }
 
     @Override
-    public List<AirlineDto> getAllAirlines() {
+    public List<GetAirlineListResponse> getAllAirlines() {
 
         List<Airline> airlineList = airlineRepository.findAll();
 
         return airlineList.stream()
-                .map(airline -> this.mapperService.forResponse().map(airline, AirlineDto.class)).
+                .map(airline -> this.mapperService.forResponse().map(airline, GetAirlineListResponse.class)).
                 collect(Collectors.toList());
 
     }

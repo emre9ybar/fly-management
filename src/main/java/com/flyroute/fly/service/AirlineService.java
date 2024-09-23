@@ -1,6 +1,7 @@
 package com.flyroute.fly.service;
 
-import com.flyroute.fly.dto.AirlineDto;
+import com.flyroute.fly.dto.request.GetAirlineListResponse;
+import com.flyroute.fly.dto.request.UpdateAirlineRequest;
 import com.flyroute.fly.entity.Airline;
 
 import java.util.List;
@@ -8,11 +9,11 @@ import java.util.Optional;
 
 public interface AirlineService {
 
-    Airline create(AirlineDto airlineDto);
+    Airline create(GetAirlineListResponse CreateAirlineRequest);
 
-    Airline update(AirlineDto airlineDto);
+    Airline update(UpdateAirlineRequest UpdateAirlineRequest);
 
-    List<AirlineDto> getAllAirlines();
+    List<GetAirlineListResponse> getAllAirlines();
 
     Optional<Airline> getAirlineById(Long id);
 

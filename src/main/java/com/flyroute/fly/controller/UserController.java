@@ -19,16 +19,14 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-
+    //trylar cacth serviste yazılacak . log serviste .
+    //Exception sınıfı oluşturulacak orada .
     @PostMapping
     public ResponseEntity<CreateUserRequest> add(@RequestBody CreateUserRequest userDto) {
         try {
             userService.add(userDto);
-            System.out.println("eklendi");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
-            System.out.println("kötü istek");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }

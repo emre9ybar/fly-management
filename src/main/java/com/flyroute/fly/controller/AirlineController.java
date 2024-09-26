@@ -1,10 +1,9 @@
 package com.flyroute.fly.controller;
 
-import com.flyroute.fly.dto.request.GetAirlineListResponse;
 import com.flyroute.fly.dto.request.UpdateAirlineRequest;
+import com.flyroute.fly.dto.response.GetAirlineListResponse;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.service.AirlineService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/airline")
+@RequestMapping("/api/airlines")
 public class AirlineController {
 
     private final AirlineService airlineService;
@@ -21,82 +20,40 @@ public class AirlineController {
         this.airlineService = airlineService;
     }
 
+    // Uçak şirketi oluşturma
     @PostMapping
-    public ResponseEntity<GetAirlineListResponse> create(@RequestBody GetAirlineListResponse airlineDto) {
-
-        try {
-            airlineService.create(airlineDto);
-            System.out.println("Airline created.");
-
-            return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (Exception e) {
-            System.out.println("Error."+e);
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
+    public ResponseEntity<Airline> createAirline(@RequestBody GetAirlineListResponse airlineDto) {
+        Airline createdAirline = airlineService.create(airlineDto);
+        return ResponseEntity.ok(createdAirline);
     }
 
-    @PutMapping
-    public ResponseEntity<UpdateAirlineRequest> update(@RequestBody UpdateAirlineRequest UpdateAirlineRequest) {
-
-        try {
-            airlineService.update(UpdateAirlineRequest);
-            System.out.println("Airline updated.");
-
-            return ResponseEntity.status(HttpStatus.OK).build();
-        } catch (Exception e) {
-            System.out.println("Error."+e);
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
+    // Uçak şirketi güncelleme
+    @PutMapping("/{id}")
+    public ResponseEntity<Airline> updateAirline(@PathVariable Long id, @RequestBody UpdateAirlineRequest updateAirlineRequest) {
+        updateAirlineRequest.setId(id);  // UpdateAirlineRequest içinde id'yi güncelliyoruz
+        Airline updatedAirline = airlineService.update(updateAirlineRequest);
+        return ResponseEntity.ok(updatedAirline);
     }
 
+    // Tüm uçak şirketlerini listeleme
     @GetMapping
     public ResponseEntity<List<GetAirlineListResponse>> getAllAirlines() {
-
-        try {
-            List<GetAirlineListResponse> airlineDtos = airlineService.getAllAirlines();
-            System.out.println("All airlines have been retrieved.");
-
-            return ResponseEntity.ok(airlineDtos);
-        } catch (Exception e) {
-            System.out.println("Error. "+e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
+        List<GetAirlineListResponse> airlines = airlineService.getAllAirlines();
+        return ResponseEntity.ok(airlines);
     }
 
-    @GetMapping("/find")
-    public ResponseEntity<Optional<Airline>> getAirlineById(@RequestParam long id) {
-
-        try {
-            Optional<Airline> airline = airlineService.getAirlineById(id);
-            System.out.println("Airline has been found with id: "+id);
-
-            return ResponseEntity.ok(airline);
-        } catch (Exception e) {
-            System.out.println("Error. "+e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
+    // Belirli bir id'ye göre uçak şirketi bulma
+    @GetMapping("/{id}")
+    public ResponseEntity<Airline> getAirlineById(@PathVariable Long id) {
+        Optional<Airline> airline = airlineService.getAirlineById(id);
+        return airline.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping
-    public ResponseEntity<String> delete(@RequestParam long id) {
-
-        try {
-            String result = airlineService.delete(id);
-
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            System.out.println("Error. "+e);
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-
+    // Uçak şirketi silme
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAirline(@PathVariable Long id) {
+        String response = airlineService.delete(id);
+        return ResponseEntity.ok(response);
     }
-
 }

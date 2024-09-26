@@ -1,8 +1,8 @@
 package com.flyroute.fly.service.impl;
 
 import com.flyroute.fly.core.MapperService;
-import com.flyroute.fly.dto.request.GetAirlineListResponse;
 import com.flyroute.fly.dto.request.UpdateAirlineRequest;
+import com.flyroute.fly.dto.response.GetAirlineListResponse;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.repository.AirlineRepository;
 import com.flyroute.fly.service.AirlineService;
@@ -57,7 +57,7 @@ public class AirlineServiceImpl implements AirlineService {
         List<Airline> airlineList = airlineRepository.findAll();
 
         return airlineList.stream()
-                .map(airline -> this.mapperService.forResponse().map(airline, GetAirlineListResponse.class)).
+                .map(airline -> this.mapperService.forResponse().map(airline,GetAirlineListResponse.class)).
                 collect(Collectors.toList());
 
     }

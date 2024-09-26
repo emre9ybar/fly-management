@@ -1,7 +1,7 @@
 package com.flyroute.fly.service;
 
-import com.flyroute.fly.dto.request.GetAirlineListResponse;
 import com.flyroute.fly.dto.request.UpdateAirlineRequest;
+import com.flyroute.fly.dto.response.GetAirlineListResponse;
 import com.flyroute.fly.entity.Airline;
 
 import java.util.List;

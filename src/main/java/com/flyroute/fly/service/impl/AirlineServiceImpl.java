@@ -1,8 +1,8 @@
 package com.flyroute.fly.service.impl;
 
 import com.flyroute.fly.core.MapperService;
-import com.flyroute.fly.dto.request.UpdateAirlineRequest;
-import com.flyroute.fly.dto.response.GetAirlineListResponse;
+import com.flyroute.fly.dto.request.airlinerequest.UpdateAirlineRequest;
+import com.flyroute.fly.dto.response.airlineresponse.GetAirlineListResponse;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.repository.AirlineRepository;
 import com.flyroute.fly.service.AirlineService;

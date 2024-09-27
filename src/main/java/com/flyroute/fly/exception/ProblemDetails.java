@@ -1,22 +1,23 @@
-package com.flyroute.fly.dto.response;
+package com.flyroute.fly.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExceptionResponse {
+public class ProblemDetails {
+
     private String message;
 
     private LocalDateTime localDate;
 
     private String path;
 
-    private String errorCode;
+    private HttpStatus errorCode;
 
 }

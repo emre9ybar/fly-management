@@ -1,4 +1,4 @@
-package com.flyroute.fly.dto.request;
+package com.flyroute.fly.dto.response.userresponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateUserRequest {
+public class UserGetByIdResponse {
     private Long id;
 
     private String name;
@@ -17,4 +17,5 @@ public class UpdateUserRequest {
     private String email;
 
     private String country;
+
 }

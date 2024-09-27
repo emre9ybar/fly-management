@@ -1,4 +1,4 @@
-package com.flyroute.fly.dto.response;
+package com.flyroute.fly.dto.response.airlineresponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

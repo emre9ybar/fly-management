@@ -1,12 +1,13 @@
 package com.flyroute.fly.service.impl;
 
 import com.flyroute.fly.core.MapperService;
-import com.flyroute.fly.dto.request.CreateUserRequest;
-import com.flyroute.fly.dto.request.UpdateUserRequest;
-import com.flyroute.fly.dto.response.GetUsersListResponse;
-import com.flyroute.fly.dto.response.UserGetByIdResponse;
+import com.flyroute.fly.dto.request.userre.CreateUserRequest;
+import com.flyroute.fly.dto.request.userre.UpdateUserRequest;
+import com.flyroute.fly.dto.response.userresponse.GetUsersListResponse;
+import com.flyroute.fly.dto.response.userresponse.UserGetByIdResponse;
 import com.flyroute.fly.entity.User;
 import com.flyroute.fly.repository.UserRepository;
+import com.flyroute.fly.rules.UserBusinessRules;
 import com.flyroute.fly.service.UserService;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +20,22 @@ public class UserServiceImpl implements UserService {
 
     private final MapperService mapperService;
     private  final UserRepository userRepository;
+    private final UserBusinessRules userBusinessRules;
 
-    public UserServiceImpl(MapperService mapperService, UserRepository userRepository) {
+
+
+    public UserServiceImpl(MapperService mapperService, UserRepository userRepository, UserBusinessRules userBusinessRules) {
         this.mapperService = mapperService;
         this.userRepository = userRepository;
+        this.userBusinessRules = userBusinessRules;
     }
 
 
     @Override
-    public User add(CreateUserRequest CreateUserRequest) {
-        User user = this.mapperService.forRequest().map(CreateUserRequest, User.class);
-        return userRepository.save(user);
+    public User add(CreateUserRequest createUserRequest) {
+        this.userBusinessRules.checkIfEmail(createUserRequest.getEmail());
+        User user = this.mapperService.forRequest().map(createUserRequest,User.class);
+        return user;
     }
 
     @Override
@@ -49,10 +55,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserGetByIdResponse getUserById(long id) {
+        this.userBusinessRules.checkIfUserId(id);
        User user = userRepository.findById(id).orElseThrow();
        UserGetByIdResponse getByIdResponse = mapperService.forResponse().map(user,UserGetByIdResponse.class);
-
-        return getByIdResponse;
+       return getByIdResponse;
     }
 
     @Override

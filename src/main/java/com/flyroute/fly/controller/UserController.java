@@ -1,11 +1,12 @@
 package com.flyroute.fly.controller;
 
-import com.flyroute.fly.dto.request.CreateUserRequest;
-import com.flyroute.fly.dto.request.UpdateUserRequest;
-import com.flyroute.fly.dto.request.UserDeleteRequest;
-import com.flyroute.fly.dto.response.GetUsersListResponse;
-import com.flyroute.fly.dto.response.UserGetByIdResponse;
+import com.flyroute.fly.dto.request.userre.CreateUserRequest;
+import com.flyroute.fly.dto.request.userre.UpdateUserRequest;
+import com.flyroute.fly.dto.request.userre.UserDeleteRequest;
+import com.flyroute.fly.dto.response.userresponse.GetUsersListResponse;
+import com.flyroute.fly.dto.response.userresponse.UserGetByIdResponse;
 import com.flyroute.fly.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody CreateUserRequest userDto) {
+    public ResponseEntity<CreateUserRequest> add( @RequestBody @Valid CreateUserRequest userDto) {
         userService.add(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

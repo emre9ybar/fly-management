@@ -1,7 +1,7 @@
 package com.flyroute.fly.controller;
 
-import com.flyroute.fly.dto.request.UpdateAirlineRequest;
-import com.flyroute.fly.dto.response.GetAirlineListResponse;
+import com.flyroute.fly.dto.request.airlinerequest.UpdateAirlineRequest;
+import com.flyroute.fly.dto.response.airlineresponse.GetAirlineListResponse;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.service.AirlineService;
 import org.springframework.http.ResponseEntity;

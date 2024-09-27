@@ -1,4 +1,4 @@
-package com.flyroute.fly.dto.request;
+package com.flyroute.fly.dto.request.userre;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

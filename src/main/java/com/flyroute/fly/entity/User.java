@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -14,13 +16,19 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private int id;
 
     @Column(name = "uuid")
     private String Uuid;
 
+    @OneToMany(mappedBy = "user")
+    private List<Passenger> passengers;
+
+    @OneToMany(mappedBy = "user")
+    private List<Reservation> reservations;
+
     @Column(name ="name")
-   private String name;
+    private String name;
 
     @Column(name = "surname")
     private String surname;

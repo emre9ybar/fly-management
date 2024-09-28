@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -15,7 +17,7 @@ public class Airline {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -28,5 +30,8 @@ public class Airline {
 
     @Column(name = "website")
     private String website;
+
+    @Column(name = "airline")
+    private List<Flight> flights;
 
 }

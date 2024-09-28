@@ -27,7 +27,4 @@ public class UserBusinessRules {
             throw new UserExceptionNotCreated(UserMessage.USER_NOT_FOUND);
         }
     }
-
-
-
 }

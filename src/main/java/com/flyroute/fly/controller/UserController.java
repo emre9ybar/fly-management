@@ -1,5 +1,4 @@
 package com.flyroute.fly.controller;
-
 import com.flyroute.fly.dto.request.userre.CreateUserRequest;
 import com.flyroute.fly.dto.request.userre.UpdateUserRequest;
 import com.flyroute.fly.dto.request.userre.UserDeleteRequest;
@@ -12,11 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
     private final UserService userService;
 
     public UserController(UserService userService) {

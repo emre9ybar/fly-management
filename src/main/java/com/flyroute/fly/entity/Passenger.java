@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "passengers")
@@ -16,16 +17,14 @@ public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
+    private int id;
 
     @Column(name = "uuid")
     private String Uuid;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "passport_number")
     private String passportNumber;
@@ -37,6 +36,8 @@ public class Passenger {
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
+    @OneToMany(mappedBy = "passenger")
+    private List<Ticket> tickets;
 
 
 

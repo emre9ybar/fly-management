@@ -31,7 +31,7 @@ public class Airline {
     @Column(name = "website")
     private String website;
 
-    @Column(name = "airline")
+    @OneToMany(mappedBy = "airline")
     private List<Flight> flights;
 
 }

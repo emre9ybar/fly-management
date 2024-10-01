@@ -24,12 +24,8 @@ public class Flight {
     private Airline airline;
 
     @ManyToOne
-    @JoinColumn(name = "departure_airport_id")
-    private Airport departureAirport;
-
-    @ManyToOne
-    @JoinColumn(name = "arrival_airport_id")
-    private Airport arrivalAirport;
+    @JoinColumn(name = "airport_id")
+    private Airport airport;
 
     @Column(name = "departure_time")
     private LocalDateTime departureTime;

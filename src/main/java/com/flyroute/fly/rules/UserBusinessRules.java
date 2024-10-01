@@ -22,7 +22,7 @@ public class UserBusinessRules {
             throw new UserExceptionNotCreated(UserMessage.EMAIL_ALREADY_EXISTS);
         }
     }
-    public void checkIfUserId(long id){
+    public void checkIfUserId(Long id){
         if (this.userRepository.existsById(id)){
             throw new UserExceptionNotCreated(UserMessage.USER_NOT_FOUND);
         }

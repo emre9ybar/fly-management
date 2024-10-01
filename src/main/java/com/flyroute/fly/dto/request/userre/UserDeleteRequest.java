@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDeleteRequest {
 
-    private long id;
+    private Long id;
 
 }

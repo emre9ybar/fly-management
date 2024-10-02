@@ -1,5 +1,6 @@
 package com.flyroute.fly.service.impl;
 
+import com.flyroute.fly.core.ApiResponse;
 import com.flyroute.fly.core.MapperService;
 import com.flyroute.fly.dto.request.userre.CreateUserRequest;
 import com.flyroute.fly.dto.request.userre.UpdateUserRequest;
@@ -9,13 +10,13 @@ import com.flyroute.fly.repository.UserRepository;
 import com.flyroute.fly.rules.UserBusinessRules;
 import com.flyroute.fly.service.UserService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
-@Log4j2
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -31,34 +32,34 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User save(CreateUserRequest createUserRequest) {
+    public ApiResponse<User> save(CreateUserRequest createUserRequest) {
         this.userBusinessRules.checkIfEmail(createUserRequest.getEmail());
         User user =this.mapperService.forRequest().map(createUserRequest,User.class);
         userRepository.save(user);
-        log.debug("Kullanıcı kaydedildi: {}", user.getName());
-        log.info("Yeni kullanıcı eklendi: {}", user.getEmail());
+        ApiResponse<User> apiResponse = new ApiResponse<>(true,user.getName()+" successfully saved");
+        return apiResponse;
+    }
 
-        return user;
+    public ApiResponse<User> update(UpdateUserRequest updateUserRequest) {
+        User userFind = userRepository.findById(updateUserRequest.getId()).orElseThrow(() ->
+                new RuntimeException("User not found with id: " + updateUserRequest.getId()));
+        this.mapperService.forRequest().map(updateUserRequest, userFind);
+        userRepository.save(userFind);
+        ApiResponse<User> apiResponse = new ApiResponse<>(true, "User successfully saved");
+        return apiResponse;
     }
 
     @Override
-    public User update(UpdateUserRequest UpdateUserRequest) {
-        User user =this.mapperService.forRequest().map(UpdateUserRequest,User.class);
-        userRepository.save(user);
-        return user;
+    public List<GetUsersListResponse> getUsersList() {
+        List<User> users = userRepository.findAll();
+        List<GetUsersListResponse> usersListResponses=users.stream().map(usersList ->this.mapperService.forRequest().
+                map(usersList,GetUsersListResponse.class) ).toList();
+        return usersListResponses;
     }
 
-    @Override
-    public List<GetUsersListResponse> getAllUsers() {
-        List<User> userList = this.userRepository.findAll();
-        List<GetUsersListResponse>getUsersListResponses=userList.stream().map(users -> this.mapperService.forRequest()
-                .map(users,GetUsersListResponse.class)).toList();
-        return getUsersListResponses;
-    }
 
     @Override
     public Optional<User> getUserById(Long id) {
-        userBusinessRules.checkIfUserId(id);
         Optional<User> user = this.userRepository.findById(id);
         return user;
     }

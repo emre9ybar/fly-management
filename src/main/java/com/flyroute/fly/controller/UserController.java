@@ -1,12 +1,11 @@
 package com.flyroute.fly.controller;
+import com.flyroute.fly.core.ApiResponse;
 import com.flyroute.fly.dto.request.userre.CreateUserRequest;
 import com.flyroute.fly.dto.request.userre.UpdateUserRequest;
-import com.flyroute.fly.dto.request.userre.UserDeleteRequest;
 import com.flyroute.fly.dto.response.userresponse.GetUsersListResponse;
 import com.flyroute.fly.entity.User;
 import com.flyroute.fly.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,16 +22,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateUserRequest> add( @RequestBody @Valid CreateUserRequest userDto) {
-        userService.save(userDto);
-        System.out.println("contoller çalışıyor."+userDto.getEmail());
-        return ResponseEntity.ok(userDto);
+    public ResponseEntity<?> add( @RequestBody @Valid CreateUserRequest CreateUserRequest) {
+      ApiResponse apiResponse = userService.save(CreateUserRequest);
+        return apiResponse.getResponseJson(apiResponse);
     }
-
     @GetMapping
     public ResponseEntity<List<GetUsersListResponse>> getAllUserList() {
-        List<GetUsersListResponse> userDtos = userService.getAllUsers();
-        return ResponseEntity.ok(userDtos);
+        List<GetUsersListResponse> usersList = userService.getUsersList();
+        return ResponseEntity.ok(usersList);
     }
 
     @GetMapping("/{id}")
@@ -42,14 +39,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody UpdateUserRequest updateUserRequest) {
-        userService.update(updateUserRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<UpdateUserRequest> update(@RequestBody UpdateUserRequest updateUserRequest) {
+     ApiResponse apiResponse =  userService.update(updateUserRequest);
+        return apiResponse.getResponseJson(apiResponse);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<User> delete(@RequestBody UserDeleteRequest deleteRequest) {
-        userService.deleteById(deleteRequest.getId());
+    public ResponseEntity<User> delete(@PathVariable long id) {
+       userService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,6 +1,7 @@
 package com.flyroute.fly.rules;
 
 import com.flyroute.fly.entity.Airline;
+import com.flyroute.fly.exception.airlineexception.AirlineExceptionNotCreated;
 import com.flyroute.fly.message.AirlineMessage;
 import com.flyroute.fly.repository.AirlineRepository;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class AirlineBusinessRules {
         Optional<Airline> airline = airlineRepository.findByCode(code);
 
         if (airline.isPresent()) {
-            throw new RuntimeException(AirlineMessage.CODE_ALREADY_EXISTS);
+            throw new AirlineExceptionNotCreated(AirlineMessage.CODE_ALREADY_EXISTS);
         }
 
     }

@@ -12,17 +12,6 @@ public class FlyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FlyApplication.class, args);
 
-
-
 	}
-	@Bean
-	public ModelMapper getModelMapper(){
-		return new ModelMapper();
-	}
-	@Bean
-	public UserMessage userMessage(){
-		return new UserMessage();
-	}
-
 
 }

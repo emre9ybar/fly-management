@@ -1,9 +1,11 @@
 package com.flyroute.fly.controller;
 
+import com.flyroute.fly.dto.request.airlinerequest.CreateAirlineRequest;
 import com.flyroute.fly.dto.request.airlinerequest.UpdateAirlineRequest;
 import com.flyroute.fly.dto.response.airlineresponse.GetAirlineListResponse;
 import com.flyroute.fly.entity.Airline;
 import com.flyroute.fly.service.AirlineService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +24,8 @@ public class AirlineController {
 
     // Uçak şirketi oluşturma
     @PostMapping
-    public ResponseEntity<Airline> createAirline(@RequestBody GetAirlineListResponse airlineDto) {
-        Airline createdAirline = airlineService.create(airlineDto);
+    public ResponseEntity<Airline> createAirline(@Valid @RequestBody CreateAirlineRequest createAirlineRequest) {
+        Airline createdAirline = airlineService.create(createAirlineRequest);
         return ResponseEntity.ok(createdAirline);
     }
 

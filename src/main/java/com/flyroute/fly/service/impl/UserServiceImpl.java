@@ -11,11 +11,11 @@ import com.flyroute.fly.rules.UserBusinessRules;
 import com.flyroute.fly.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class UserServiceImpl implements UserService {

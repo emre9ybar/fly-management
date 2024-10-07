@@ -1,5 +1,6 @@
 package com.flyroute.fly;
 
+import com.flyroute.fly.message.AirlineMessage;
 import com.flyroute.fly.message.UserMessage;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +12,9 @@ public class FlyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlyApplication.class, args);
+
+
+	}
 
 	}
 

@@ -1,5 +1,6 @@
 package com.flyroute.fly.service;
 
+import com.flyroute.fly.core.ApiResponse;
 import com.flyroute.fly.dto.request.userre.CreateUserRequest;
 import com.flyroute.fly.dto.request.userre.UpdateUserRequest;
 import com.flyroute.fly.dto.response.userresponse.GetUsersListResponse;
@@ -11,12 +12,12 @@ import java.util.Optional;
 public interface UserService  {
 
 
-    User save(CreateUserRequest CreateUserRequest);
+    ApiResponse save(CreateUserRequest CreateUserRequest);
 
-    User update(UpdateUserRequest UpdateUserRequest);
+    ApiResponse update(UpdateUserRequest UpdateUserRequest);
 
-    List<GetUsersListResponse> getAllUsers();
 
+    List<GetUsersListResponse> getUsersList();
     Optional<User> getUserById(Long id);
 
     void deleteById(Long id);

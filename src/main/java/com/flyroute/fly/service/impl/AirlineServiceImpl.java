@@ -41,7 +41,6 @@ public class AirlineServiceImpl implements AirlineService {
         return airlineRepository.save(airline);
 
     }
-
     @Override
     @Transactional
     public Airline update(UpdateAirlineRequest UpdateAirlineRequest) {

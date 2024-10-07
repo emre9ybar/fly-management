@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Email;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +23,8 @@ public class CreateUserRequest {
 
         @NotBlank(message = "Surname cannot be blank.")
         private String surname;
+
+        private UUID Uuid= UUID.randomUUID();
 
         @NotBlank(message = "Phone cannot be blank.")
         @Pattern(regexp = "\\+?[0-9]{10,15}", message = "Phone number must be valid and contain between 10 and 15 digits.")

@@ -46,9 +46,9 @@ public class PromotionServiceImpl implements PromotionService {
 
         int promotionId = updatePromotionRequest.getId();
 
-        Promotion promotion = promotionRepository.findById(promotionId).orElseThrow(() -> {
-            throw new RuntimeException(PromotionMessage.PROMOTION_NOT_FOUND + promotionId);
-        });
+        Promotion promotion = getPromotion(promotionId);
+
+        mapperService.forRequest().map(updatePromotionRequest, promotion);
 
         Promotion savedPromotion = promotionRepository.save(promotion);
 

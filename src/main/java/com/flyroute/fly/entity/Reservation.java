@@ -29,10 +29,6 @@ public class Reservation {
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    @ManyToOne
-    @JoinColumn(name = "promotion_id")
-    private Promotion promotion;
-
     @Column(name = "payment_method")
     private String paymentMethod;
 

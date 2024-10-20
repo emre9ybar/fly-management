@@ -22,7 +22,7 @@ public class Passenger {
     @Column(name = "uuid")
     private String Uuid;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 

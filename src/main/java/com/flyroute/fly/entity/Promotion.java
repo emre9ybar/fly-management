@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "promotions")
@@ -22,14 +19,18 @@ public class Promotion {
     @Column(name = "id")
     private int id;
 
-    @OneToMany(mappedBy = "promotion")
-    private List<Reservation> reservations;
+    @Column(name = "code", nullable = false)
+    private String code;
 
-    @Column(name = "startDate")
-    private LocalDate starDate;
+    private String description;
 
-    @Column(name = "finishDate")
-    private LocalDate finishDate;
+    @Column(name = "discount", nullable = false)
+    private int discount;
 
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
 }

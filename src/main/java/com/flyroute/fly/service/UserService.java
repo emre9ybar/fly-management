@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface UserService  {
 
-
+    ApiResponse<User> createUser(CreateUserRequest createUserRequest);
     ApiResponse save(CreateUserRequest CreateUserRequest);
 
     ApiResponse update(UpdateUserRequest UpdateUserRequest);

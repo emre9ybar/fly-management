@@ -1,5 +1,6 @@
 package com.flyroute.fly.dto.request.userre;
 
+import com.flyroute.fly.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Email;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -24,8 +26,6 @@ public class CreateUserRequest {
         @NotBlank(message = "Surname cannot be blank.")
         private String surname;
 
-        private UUID Uuid= UUID.randomUUID();
-
         @NotBlank(message = "Phone cannot be blank.")
         @Pattern(regexp = "\\+?[0-9]{10,15}", message = "Phone number must be valid and contain between 10 and 15 digits.")
         private String phone;
@@ -40,6 +40,9 @@ public class CreateUserRequest {
         @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).*$",
                 message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, and one special character.")
         private String password;
+
+        @NotBlank
+        private Set<Role> authorities;
 
     }
 

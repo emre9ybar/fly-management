@@ -1,25 +1,27 @@
 package com.flyroute.fly.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+@Builder
+public class User implements UserDetails {
     //Kullanıcı için notnull felan ekledim beklediğim şeyi alamadım.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-    @Column(name = "uuid")
-    private String Uuid;
 
     @OneToMany(mappedBy = "user")
     private List<Passenger> passengers;
@@ -42,6 +44,23 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> authorities;
+
+    private boolean accountNonExpired;
+    private boolean isEnabled;
+    private boolean accountNonLocked;
+    private boolean credentialsNonExpired;
+    private LocalDateTime createdTime;
+
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
 
 }

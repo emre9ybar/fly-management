@@ -23,7 +23,8 @@ public class GeneralExceptionHandler {
 
     @ExceptionHandler(UserExceptionNotCreated.class)
     public ResponseEntity<ProblemDetails> handleUserNotCreatedException(UserExceptionNotCreated ex, WebRequest request){
-        ProblemDetails ProblemDetails = new ProblemDetails(ex.getMessage(),
+        ProblemDetails ProblemDetails = new ProblemDetails(
+                ex.getMessage(),
                 LocalDateTime.now(),
                 request.getDescription(false),
                 HttpStatus.CONFLICT
